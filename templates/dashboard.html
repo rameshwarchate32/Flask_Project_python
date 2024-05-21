@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        body {
+            background: linear-gradient(to right, #ff758c, #ff7eb3);
+            color: #fff;
+        }
+
+        .container {
+            padding-top: 50px;
+        }
+
+        h1 {
+            color: #fff;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 3.5rem; /* Increase font size */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        h4 {
+            color: #fff;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.2rem; /* Increase font size */
+        }
+
+        /* Adjust spacing between images */
+        .image-container {
+            position: relative;
+            margin-bottom: 20px;
+            width: 150px; /* Adjust the width as needed */
+            height: 150px; /* Adjust the height as needed */
+            overflow: hidden;
+            border-radius: 50%; /* Make it a circle */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Add shadow */
+        }
+
+        .profile-heading {
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #fff;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+            font-size: 1.2rem;
+            background-color: rgba(0, 0, 0, 0.5); /* Add background color */
+            padding: 5px 10px; /* Add padding */
+            border-radius: 5px; /* Add border radius */
+        }
+
+        .profile-image {
+            width: 100%;
+            height: auto;
+            border-radius: 50%;
+        }
+
+        /* Add animations */
+        .btn-animate {
+            transition: all 0.3s ease;
+            border: none;
+            border-radius: 40px;
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            background: linear-gradient(to right, #ff758c, #ff7eb3);
+            color: #fff;
+            text-transform: uppercase;
+            font-weight: bold;
+            cursor: pointer;
+            outline: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-animate:before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300px;
+            height: 300px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transition: all 0.8s ease;
+            z-index: 0;
+            transform: translate(-50%, -50%) scale(0);
+        }
+
+        .btn-animate:hover:before {
+            transform: translate(-50%, -50%) scale(3);
+            opacity: 0;
+        }
+
+        .btn-animate:hover {
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Task Details Project</h1>
+    <h4>Login Email: {{ session["username"] }}</h4>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% for i in data %}
+        <div class="col d-flex justify-content-center"> <!-- Center content horizontally -->
+            <div class="image-container text-center">
+                <h3 class="profile-heading">Profile</h3>
+                <img src="/static/images/{{ i[4] }}" class="profile-image" alt="Profile Picture">
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    
+    <!-- Task Details section -->
+    <div class="row justify-content-center mt-4">
+        {% for task in tasks %}
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ task.name }}</h5> <!-- Task name -->
+                    <p class="card-text">Date: {{ task.date }}</p> <!-- Task date -->
+                    <a href="#" class="btn btn-primary btn-animate">View Details</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    
+    <!-- Button section -->
+    <div class="row justify-content-center mt-4">
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Add Task</h5>
+                    <button type="button" class="btn btn-animate" data-bs-toggle="modal" data-bs-target="#exampleModal">Add Task</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5 class="card-title">View All Tasks</h5>
+                    <a href="/display_tasks" class="btn btn-animate">View All Tasks</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Deleted Date History</h5>
+                    <button type="button" class="btn btn-animate" data-bs-toggle="modal" data-bs-target="#dateSelectModal">Deleted Date History</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5 class="card-title">View Deleted History</h5>
+                    <a href="/history" class="btn btn-animate">View Deleted History</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Logout</h5>
+                    <a href="/logout" class="btn btn-animate">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add Task Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel" style="color: #000;">Add Task</h5> <!-- Override color to black -->
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="/add_task" method="post">
+                    <div class="mb-3">
+                        <label for="taskName" class="form-label">Task Name:</label>
+                        <input type="text" id="taskName" name="taskName" class="form-control" placeholder="Enter task name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="taskDate" class="form-label">Date:</label>
+                        <input type="date" id="taskDate" name="taskDate" class="form-control" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-animate">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Date Select Modal -->
+<div class="modal fade" id="dateSelectModal" tabindex="-1" aria-labelledby="dateSelectModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="dateSelectModalLabel" style="color: #000;">Deleted Date History</h5> <!-- Override color to black -->
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="/show_deleted_tasks" method="post">
+                    <div class="mb-3">
+                        <label for="historyDate" class="form-label">Date:</label>
+                        <input type="date" id="historyDate" name="historyDate" class="form-control" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-animate">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Bootstrap Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>

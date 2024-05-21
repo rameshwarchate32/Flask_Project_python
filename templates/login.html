@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.7/semantic.min.css" integrity="sha256-wT6CFc7EKRuf7uyVfi+MQNHUzojuHN2pSw0YWFt2K5E=" crossorigin="anonymous" />
+    <style>
+        body {
+            background-image: url('https://source.unsplash.com/random');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .login-container {
+            max-width: 400px;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent background */
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .login-heading {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .login-form input[type="email"],
+        .login-form input[type="password"] {
+            width: 100%;
+            padding: 14px;
+            margin-bottom: 20px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            transition: border-color 0.3s ease-in-out;
+        }
+
+        .login-form input[type="email"]:focus,
+        .login-form input[type="password"]:focus {
+            border-color: #007bff;
+        }
+
+        .login-form button[type="submit"] {
+            width: 25%;
+            padding: 10px;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .login-form button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="ui raised very padded center aligned text container segment login-container">
+        <h1 class="ui header login-heading">Log in</h1>
+        <br>
+        <form class="login-form" action="/validate" method="post">
+            <div class="field">
+                <div class="ui left icon input">
+                    <i class="mail outline icon"></i>
+                    <input type="email" name="email" placeholder="Email Address" autofocus="true">
+                </div>
+            </div>
+            <br>
+            <div class="field">
+                <div class="ui left icon input">
+                    <i class="lock icon"></i>
+                    <input type="password" name="password" placeholder="Password">
+                </div>
+            </div>
+            <br>
+            <button type="submit" class="ui large teal button">Log in</button>
+        </form>
+        <br>
+        <p>Don't have an account? <a href="#" id="signup-link">Sign up</a></p>
+    </div>
+
+    <!-- Modal -->
+    <div class="ui modal" id="register-modal" style="position: relative;">
+        <i class="close icon"></i>
+        <div class="header">
+            Register
+        </div>
+        <div class="content">
+            <form class="ui form" action="/register" method="post" enctype="multipart/form-data">
+                <div class="field">
+                    <label>Full Name</label>
+                    <input type="text" name="fullname" placeholder="Full Name" required>
+                </div>
+                <div class="field">
+                    <label>Email Address</label>
+                    <input type="email" name="email" placeholder="Email Address" required>
+                </div>
+                <div class="field">
+                    <label>Password</label>
+                    <input type="password" name="password" placeholder="Password" required>
+                </div>
+                <div class="field">
+                    <label>Photo</label>
+                    <input type="file" name="photo" accept="image/*" required>
+                </div>
+                <button class="ui primary button" type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.7/semantic.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#signup-link').click(function() {
+                $('#register-modal').modal('show', {closable: true});
+            });
+        });
+    </script>
+</body>
+</html>
